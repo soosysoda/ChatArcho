@@ -8,27 +8,12 @@
     ],
     "routes": [
         {
-            "src": "/styles.css",
-            "dest": "/public/styles.css",
-            "headers": {
-                "Content-Type": "text/css"
-            }
-        },
-        {
-            "src": "/script.js",
-            "dest": "/public/script.js",
-            "headers": {
-                "Content-Type": "application/javascript"
-            }
-        },
-        {
             "src": "/api/(.*)",
-            "dest": "/server.js"
+            "dest": "server.js"
         },
         {
-            "src": "/(.*)\\.(js|css|html|ico)",
-            "dest": "/public/$1.$2"
-        },
-        { "src": "/(.*)", "dest": "/server.js" }
+            "src": "/(.*)",
+            "dest": "server.js"
+        }
     ]
 }
