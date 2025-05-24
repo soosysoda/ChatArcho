@@ -15,6 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(join(__dirname, 'public')));
 
+if (!process.env.OPENROUTER_API_KEY){
+    console.error('OPENROUTER_API_KEY is not set in the environment variables.');
+}
+
 const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
     apiKey: process.env.OPENROUTER_API_KEY,
@@ -26,6 +30,11 @@ app.get('/', (req, res) => {
 
 app.post('/api/chat', async (req, res) => {
     try {
+        if (!process.env.OPENROUTER_API_KEY) {
+            return res.status(500).json({
+                error: 'API key is not configured.'
+            })
+        }
         console.log('Received request:', req.body);
         const { message, conversationHistory, model } = req.body;
         const apiKeyLastFour = process.env.OPENROUTER_API_KEY.slice(-4);
